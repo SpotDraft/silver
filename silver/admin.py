@@ -655,7 +655,7 @@ class BillingDocumentAdmin(ModelAdmin):
             except TransitionNotAllowed:
                 failed_changes.append(entry.id)
             except ValueError as error:
-                failed_actions.append(error.message)
+                failed_actions.append(str(error))
             except AttributeError:
                 failed_actions.append('{action} failed for {document}.'.format(
                     action=readable_action, document=entry

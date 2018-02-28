@@ -38,7 +38,7 @@ class TestDocumentsTransactions(TestCase):
         )
 
         expected_exception = ValidationError
-        expected_message = '{\'__all__\': [u"Currency EUR is not allowed by ' \
+        expected_message = '{\'__all__\': ["Currency EUR is not allowed by ' \
                            'the payment method. Allowed currencies are ' \
                            '[\'RON\', \'USD\']."]}'
 

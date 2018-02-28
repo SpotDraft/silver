@@ -141,7 +141,7 @@ class TestMeteredFeatureEndpoint(APITestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertEqual(response.data, {u'detail': u'Not found'})
+        self.assertEqual(response.data, {'detail': 'Not found'})
 
     def test_delete_metered_feature(self):
         MeteredFeatureFactory.create()
@@ -153,7 +153,7 @@ class TestMeteredFeatureEndpoint(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_405_METHOD_NOT_ALLOWED)
         self.assertEqual(response.data,
-                         {u'detail': u"Method 'DELETE' not allowed."})
+                         {'detail': "Method 'DELETE' not allowed."})
 
     def test_edit_put_metered_feature(self):
         MeteredFeatureFactory.create()
@@ -165,7 +165,7 @@ class TestMeteredFeatureEndpoint(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_405_METHOD_NOT_ALLOWED)
         self.assertEqual(response.data,
-                         {u'detail': u"Method 'PUT' not allowed."})
+                         {'detail': "Method 'PUT' not allowed."})
 
     def test_edit_patch_metered_feature(self):
         MeteredFeatureFactory.create()
@@ -177,6 +177,6 @@ class TestMeteredFeatureEndpoint(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_405_METHOD_NOT_ALLOWED)
         self.assertEqual(response.data,
-                         {u'detail': u"Method 'PATCH' not allowed."})
+                         {'detail': "Method 'PATCH' not allowed."})
 
     """

@@ -25,7 +25,7 @@ def _get_jwt_token(transaction):
     return jwt.encode({
         'exp': valid_until,
         'transaction': str(transaction.uuid)
-    }, settings.PAYMENT_METHOD_SECRET)
+    }, settings.PAYMENT_METHOD_SECRET).decode('UTF-8')
 
 
 def get_payment_url(transaction, request):

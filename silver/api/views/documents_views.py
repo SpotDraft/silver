@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import generics, permissions, filters, status
+from rest_framework import generics, permissions, filters, status, serializers
 from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -368,6 +368,10 @@ class DocumentList(ListAPIView):
 class PDFRetrieve(generics.RetrieveAPIView):
     permission_classes = (permissions.IsAdminUser,)
     queryset = PDF.objects.all()
+    
+    # to make swagger happy
+    serializer_class = serializers.BaseSerializer
+    
     lookup_url_kwarg = 'pdf_pk'
 
     def get(self, *args, **kwargs):
