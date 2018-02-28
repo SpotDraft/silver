@@ -116,7 +116,7 @@ class TestPlanEndpoint(APITestCase):
         self.assertEqual(response.status_code,
                          status.HTTP_405_METHOD_NOT_ALLOWED)
         self.assertEqual(response.data,
-                         {u'detail': u'Method "PUT" not allowed.'})
+                         {'detail': 'Method "PUT" not allowed.'})
 
     def test_get_plan_list(self):
         PlanFactory.create_batch(40)

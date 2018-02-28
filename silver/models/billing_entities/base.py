@@ -53,8 +53,8 @@ class BaseBillingEntity(LiveModel):
         return slugify(self.billing_name)
 
     def address(self):
-        return ", ".join(filter(None, [self.address_1, self.city, self.state,
-                                       self.zip_code, self.country]))
+        return ", ".join([_f for _f in [self.address_1, self.city, self.state,
+                                       self.zip_code, self.country] if _f])
     address.short_description = 'Address'
 
     def get_list_display_fields(self):
@@ -69,5 +69,5 @@ class BaseBillingEntity(LiveModel):
         return {field: getattr(self, field, '') for field in field_names}
 
     def __unicode__(self):
-        return (u'%s (%s)' % (self.name, self.company) if self.company
+        return ('%s (%s)' % (self.name, self.company) if self.company
                 else self.name)

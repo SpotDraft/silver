@@ -131,7 +131,7 @@ class TestTransactionEndpoint(APITestCase):
         self.assertEqual(response.data['valid_until'][:-1], valid_until.isoformat())
         self.assertEqual(response.data['can_be_consumed'], True)
         self.assertEqual(response.data['amount'],
-                         unicode(invoice.total_in_transaction_currency))
+                         str(invoice.total_in_transaction_currency))
         self.assertEqual(response.data['invoice'], invoice_url)
         self.assertEqual(response.data['proforma'], proforma_url)
         self.assertEqual(response.data['currency'], currency)
@@ -156,8 +156,8 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u'The transaction must have at least one billing document '
-                                 u'(invoice or proforma).']
+            'non_field_errors': ['The transaction must have at least one billing document '
+                                 '(invoice or proforma).']
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -183,8 +183,8 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u'The transaction must have a non-draft billing document '
-                                 u'(invoice or proforma).']
+            'non_field_errors': ['The transaction must have a non-draft billing document '
+                                 '(invoice or proforma).']
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -219,7 +219,7 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u'Invoice and proforma are not related.']
+            'non_field_errors': ['Invoice and proforma are not related.']
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -254,7 +254,7 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u"Customer doesn't match with the one in documents."]
+            'non_field_errors': ["Customer doesn't match with the one in documents."]
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -300,7 +300,7 @@ class TestTransactionEndpoint(APITestCase):
         self.assertEqual(response.data['valid_until'][:-1], valid_until.isoformat())
         self.assertEqual(response.data['can_be_consumed'], True)
         self.assertEqual(response.data['amount'],
-                         unicode(invoice.total_in_transaction_currency))
+                         str(invoice.total_in_transaction_currency))
         self.assertEqual(response.data['invoice'], invoice_url)
         self.assertEqual(response.data['proforma'], proforma_url)
         self.assertEqual(response.data['currency'], invoice.transaction_currency)
@@ -336,8 +336,8 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u"Transaction currency is different from it's "
-                                 u"document's transaction_currency."]
+            'non_field_errors': ["Transaction currency is different from it's "
+                                 "document's transaction_currency."]
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -372,8 +372,8 @@ class TestTransactionEndpoint(APITestCase):
         response = self.client.post(url, format='json', data=data)
 
         expected_data = {
-            'non_field_errors': [u"Amount is greater than the amount that should be charged in "
-                                 u"order to pay the billing document."]
+            'non_field_errors': ["Amount is greater than the amount that should be charged in "
+                                 "order to pay the billing document."]
         }
         self.assertEqual(response.data, expected_data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -443,11 +443,11 @@ class TestTransactionEndpoint(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         self.assertEqual(response.data, {
-            'proforma': [u'This field may not be modified.'],
-            'invoice': [u'This field may not be modified.'],
-            'currency': [u'This field may not be modified.'],
-            'amount': [u'This field may not be modified.'],
-            'payment_method': [u'This field may not be modified.']
+            'proforma': ['This field may not be modified.'],
+            'invoice': ['This field may not be modified.'],
+            'currency': ['This field may not be modified.'],
+            'amount': ['This field may not be modified.'],
+            'payment_method': ['This field may not be modified.']
         })
 
     def test_patch_after_initial_state(self):
@@ -465,8 +465,8 @@ class TestTransactionEndpoint(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
         self.assertEqual(response.data, {
-            u'non_field_errors': [
-                u'The transaction cannot be modified once it is in pending state.'
+            'non_field_errors': [
+                'The transaction cannot be modified once it is in pending state.'
             ]
         })
 
@@ -664,15 +664,15 @@ class TestTransactionEndpoint(APITestCase):
             mocked_token.return_value = 'token'
 
             return OrderedDict([
-                ('id', unicode(transaction.uuid)),
+                ('id', str(transaction.uuid)),
                 ('url', reverse('transaction-detail',
                                 kwargs={'customer_pk': customer.id,
                                         'transaction_uuid': transaction.uuid})),
                 ('customer', reverse('customer-detail', args=[customer.pk])),
                 ('provider', reverse('provider-detail', args=[provider.pk])),
-                ('amount', unicode(Decimal('0.00') + transaction.amount)),
-                ('currency', unicode(transaction.currency)),
-                ('state', unicode(transaction.state)),
+                ('amount', str(Decimal('0.00') + transaction.amount)),
+                ('currency', str(transaction.currency)),
+                ('state', str(transaction.state)),
                 ('proforma', reverse('proforma-detail', args=[proforma.pk])),
                 ('invoice', reverse('invoice-detail', args=[invoice.pk])),
                 ('can_be_consumed', transaction.can_be_consumed),

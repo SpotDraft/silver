@@ -65,7 +65,7 @@ class Transaction(models.Model):
 
         @classmethod
         def as_list(cls):
-            return [getattr(cls, state) for state in vars(cls).keys() if
+            return [getattr(cls, state) for state in list(vars(cls).keys()) if
                     state[0].isupper()]
 
         @classmethod
@@ -93,15 +93,15 @@ class Transaction(models.Model):
     updated_at = AutoDateTimeField(default=timezone.now)
 
     fail_code = models.CharField(
-        choices=[(code, code) for code in FAIL_CODES.keys()], max_length=32,
+        choices=[(code, code) for code in list(FAIL_CODES.keys())], max_length=32,
         null=True, blank=True
     )
     refund_code = models.CharField(
-        choices=[(code, code) for code in REFUND_CODES.keys()], max_length=32,
+        choices=[(code, code) for code in list(REFUND_CODES.keys())], max_length=32,
         null=True, blank=True
     )
     cancel_code = models.CharField(
-        choices=[(code, code) for code in CANCEL_CODES.keys()], max_length=32,
+        choices=[(code, code) for code in list(CANCEL_CODES.keys())], max_length=32,
 
         null=True, blank=True
     )
@@ -296,7 +296,7 @@ class Transaction(models.Model):
             self.document.pay()
 
     def __unicode__(self):
-        return unicode(self.uuid)
+        return str(self.uuid)
 
 
 @receiver(post_transition)

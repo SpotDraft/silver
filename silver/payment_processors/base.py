@@ -28,7 +28,7 @@ def get_instance(name):
 
 def get_all_instances():
     choices = []
-    for processor_import_path in settings.PAYMENT_PROCESSORS.keys():
+    for processor_import_path in list(settings.PAYMENT_PROCESSORS.keys()):
         choices.append(get_instance(processor_import_path))
     return choices
 
@@ -96,7 +96,7 @@ class PaymentProcessorBase(object):
         return self.name
 
     def __unicode__(self):
-        return unicode(self.name)
+        return str(self.name)
 
     def __str__(self):
         return str(self.name)

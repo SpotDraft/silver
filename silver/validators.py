@@ -19,5 +19,5 @@ from django.utils.module_loading import import_string
 
 validate_reference = validators.RegexValidator(
     regex=r'^[^,]*$',
-    message=u'Reference must not contain commas.'
+    message='Reference must not contain commas.'
 )

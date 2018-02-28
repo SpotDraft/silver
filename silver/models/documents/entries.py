@@ -100,7 +100,7 @@ class DocumentEntry(models.Model):
         )
 
     def __unicode__(self):
-        s = u'{descr} - {unit} - {unit_price} - {quantity} - {product_code}'
+        s = '{descr} - {unit} - {unit_price} - {quantity} - {product_code}'
         return s.format(
             descr=self.description,
             unit=self.unit,

@@ -117,7 +117,7 @@ class InvoiceSerializer(serializers.HyperlinkedModelSerializer):
         for entry in entries:
             entry_dict = dict()
             entry_dict['invoice'] = invoice
-            for field in entry.items():
+            for field in list(entry.items()):
                 entry_dict[field[0]] = field[1]
 
             DocumentEntry.objects.create(**entry_dict)
@@ -185,7 +185,7 @@ class ProformaSerializer(serializers.HyperlinkedModelSerializer):
         for entry in entries:
             entry_dict = dict()
             entry_dict['proforma'] = proforma
-            for field in entry.items():
+            for field in list(entry.items()):
                 entry_dict[field[0]] = field[1]
 
             DocumentEntry.objects.create(**entry_dict)

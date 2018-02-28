@@ -46,22 +46,22 @@ from silver.utils.international import currencies
 from silver.utils.payments import get_payment_url
 from silver.payment_processors.mixins import PaymentProcessorTypes
 
-from models import (Plan, MeteredFeature, Subscription, Customer, Provider,
+from .models import (Plan, MeteredFeature, Subscription, Customer, Provider,
                     MeteredFeatureUnitsLog, Invoice, DocumentEntry,
                     ProductCode, Proforma, BillingLog, BillingDocumentBase,
                     Transaction, PaymentMethod)
-from documents_generator import DocumentsGenerator
+from .documents_generator import DocumentsGenerator
 
 
 logger = logging.getLogger('silver')
 
 
 def metadata(obj):
-    d = u'(None)'
+    d = '(None)'
     if obj.meta:
-        d = u''
-        for key, value in obj.meta.iteritems():
-            d += u'%s: <code>%s</code><br>' % (escape(key), escape(value))
+        d = ''
+        for key, value in obj.meta.items():
+            d += '%s: <code>%s</code><br>' % (escape(key), escape(value))
     return d
 metadata.allow_tags = True
 
@@ -126,9 +126,9 @@ class PlanAdmin(ModelAdmin):
     interval_display.short_description = 'Interval'
 
     def description(self, obj):
-        d = u'Subscription: <code>{:.2f} {}</code><br>'.format(obj.amount,
+        d = 'Subscription: <code>{:.2f} {}</code><br>'.format(obj.amount,
                                                                obj.currency)
-        fmt = u'{name}: <code>{price:.2f} {currency}</code>'
+        fmt = '{name}: <code>{price:.2f} {currency}</code>'
         for f in obj.metered_features.all():
             d += fmt.format(
                 name=f.name,
@@ -136,8 +136,8 @@ class PlanAdmin(ModelAdmin):
                 currency=obj.currency,
             )
             if f.included_units > 0:
-                d += u'<code> ({:.2f} included)</code>'.format(f.included_units)
-            d += u'<br>'
+                d += '<code> ({:.2f} included)</code>'.format(f.included_units)
+            d += '<br>'
         return d
     description.allow_tags = True
 
@@ -221,7 +221,7 @@ class SubscriptionAdmin(ModelAdmin):
                     user_id=request.user.id,
                     content_type_id=ContentType.objects.get_for_model(entry).pk,
                     object_id=entry.id,
-                    object_repr=unicode(entry),
+                    object_repr=str(entry),
                     action_flag=CHANGE,
                     change_message='{action} action initiated by user.'.format(
                         action=action.replace('_', ' ').strip().capitalize()
@@ -646,7 +646,7 @@ class BillingDocumentAdmin(ModelAdmin):
                     user_id=request.user.id,
                     content_type_id=ContentType.objects.get_for_model(entry).pk,
                     object_id=entry.id,
-                    object_repr=unicode(entry),
+                    object_repr=str(entry),
                     action_flag=CHANGE,
                     change_message='{action} action initiated by user.'.format(
                         action=readable_action
@@ -954,7 +954,7 @@ class TransactionAdmin(ModelAdmin):
         return self.form.Meta.readonly_fields
 
     def get_pay_url(self, obj):
-        return u'<a href="%s">%s</a>' % (get_payment_url(obj, None),
+        return '<a href="%s">%s</a>' % (get_payment_url(obj, None),
                                          obj.payment_processor)
 
     get_pay_url.allow_tags = True
@@ -963,7 +963,7 @@ class TransactionAdmin(ModelAdmin):
     def get_customer(self, obj):
         link = urlresolvers.reverse("admin:silver_customer_change",
                                     args=[obj.payment_method.customer.pk])
-        return u'<a href="%s">%s</a>' % (link, obj.payment_method.customer)
+        return '<a href="%s">%s</a>' % (link, obj.payment_method.customer)
     get_customer.allow_tags = True
     get_customer.short_description = 'Customer'
 
@@ -975,7 +975,7 @@ class TransactionAdmin(ModelAdmin):
     def get_payment_method(self, obj):
         link = urlresolvers.reverse("admin:silver_paymentmethod_change",
                                     args=[obj.payment_method.pk])
-        return u'<a href="%s">%s</a>' % (link, obj.payment_method)
+        return '<a href="%s">%s</a>' % (link, obj.payment_method)
     get_payment_method.allow_tags = True
     get_payment_method.short_description = 'Payment Method'
 

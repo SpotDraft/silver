@@ -77,7 +77,7 @@ class PaymentMethodSerializer(serializers.HyperlinkedModelSerializer):
                 payment_method = self.instance
                 payment_method_dict = payment_method.__dict__.copy()
 
-                for attribute, value in attrs.items():
+                for attribute, value in list(attrs.items()):
                     setattr(payment_method, attribute, value)
 
                 payment_method.full_clean()

@@ -52,15 +52,15 @@ class TestProviderEndpoints(APITestCase):
         response = self.client.post(url, data)
 
         expected_data = {
-            'name': u'TestProviderá',
-            'company': u'S.C. Timisoará S.R.L',
+            'name': 'TestProviderá',
+            'company': 'S.C. Timisoará S.R.L',
             'email': None,
-            'address_1': u'Address',
+            'address_1': 'Address',
             'address_2': None,
-            'city': u'Timisoara',
+            'city': 'Timisoara',
             'state': None,
-            'zip_code': u'300300',
-            'country': u'RO',
+            'zip_code': '300300',
+            'country': 'RO',
             'extra': None,
             'flow': 'proforma',
             'invoice_series': 'TestSeries',
@@ -70,7 +70,7 @@ class TestProviderEndpoints(APITestCase):
             "meta": {},
         }
 
-        for attr, value in expected_data.iteritems():
+        for attr, value in expected_data.items():
             assert response.data[attr] == value
 
         assert response.status_code == status.HTTP_201_CREATED
@@ -82,7 +82,7 @@ class TestProviderEndpoints(APITestCase):
         url = reverse('provider-list')
         complete_data = {
             "name": "TestProvider",
-            'company': u'S.C. Timisoara S.R.L',
+            'company': 'S.C. Timisoara S.R.L',
             "address_1": "Address",
             "country": "RO",
             "city": "Timisoara",
@@ -109,7 +109,7 @@ class TestProviderEndpoints(APITestCase):
 
             assert response.status_code == 400
 
-            for response_item in response.data.iteritems():
+            for response_item in response.data.items():
                 field_name = response_item[0]
                 if field_name in ['id', 'url']:
                     continue
@@ -156,46 +156,46 @@ class TestProviderEndpoints(APITestCase):
     def test_POST_bulk_providers(self):
         request_body = [
             {
-                u'city': u'Cit\u01770',
-                u'proforma_series': u'ProformaSeries',
-                u'name': u'N\xe1me0',
-                u'extra': u'Extra0',
-                u'default_document_state': u'draft',
-                u'country': u'AD',
-                u'company': u'Comp\xe1ny0',
-                u'flow': u'proforma',
-                u'state': u'State0',
-                u'invoice_starting_number': 1,
-                u'phone': None,
-                u'live': True,
-                u'meta': {"something": [0, 1]},
-                u'address_1': u'Add\xe3ress10',
-                u'address_2': u'Add\xe5ress20',
-                u'proforma_starting_number': 1,
-                u'invoice_series': u'InvoiceSeries',
-                u'email': u'provider0@email.com',
-                u'zip_code': u'0'
+                'city': 'Cit\u01770',
+                'proforma_series': 'ProformaSeries',
+                'name': 'N\xe1me0',
+                'extra': 'Extra0',
+                'default_document_state': 'draft',
+                'country': 'AD',
+                'company': 'Comp\xe1ny0',
+                'flow': 'proforma',
+                'state': 'State0',
+                'invoice_starting_number': 1,
+                'phone': None,
+                'live': True,
+                'meta': {"something": [0, 1]},
+                'address_1': 'Add\xe3ress10',
+                'address_2': 'Add\xe5ress20',
+                'proforma_starting_number': 1,
+                'invoice_series': 'InvoiceSeries',
+                'email': 'provider0@email.com',
+                'zip_code': '0'
             },
             {
-                u'city': u'Cit\u01771',
-                u'proforma_series': u'ProformaSeries',
-                u'name': u'N\xe1me1',
-                u'extra': u'Extra1',
-                u'default_document_state': u'draft',
-                u'country': u'AD',
-                u'company': u'Comp\xe1ny1',
-                u'flow': u'proforma',
-                u'state': u'State1',
-                u'invoice_starting_number': 1,
-                u'phone': None,
-                u'live': True,
-                u'meta': {"something": [2, 3]},
-                u'address_1': u'Add\xe3ress11',
-                u'address_2': u'Add\xe5ress21',
-                u'proforma_starting_number': 1,
-                u'invoice_series': u'InvoiceSeries',
-                u'email': u'provider10@email.com',
-                u'zip_code': u'1'
+                'city': 'Cit\u01771',
+                'proforma_series': 'ProformaSeries',
+                'name': 'N\xe1me1',
+                'extra': 'Extra1',
+                'default_document_state': 'draft',
+                'country': 'AD',
+                'company': 'Comp\xe1ny1',
+                'flow': 'proforma',
+                'state': 'State1',
+                'invoice_starting_number': 1,
+                'phone': None,
+                'live': True,
+                'meta': {"something": [2, 3]},
+                'address_1': 'Add\xe3ress11',
+                'address_2': 'Add\xe5ress21',
+                'proforma_starting_number': 1,
+                'invoice_series': 'InvoiceSeries',
+                'email': 'provider10@email.com',
+                'zip_code': '1'
             }
         ]
 
@@ -235,7 +235,7 @@ class TestProviderEndpoints(APITestCase):
             'zip_code': provider.zip_code,
             'country': provider.country,
             'extra': provider.extra,
-            'meta': {u'something': [1, 2]},
+            'meta': {'something': [1, 2]},
         }
         assert response.data == expected
 
@@ -341,7 +341,7 @@ class TestProviderEndpoints(APITestCase):
             'proforma_starting_number': 1,
             'city': 'City1',
             'zip_code': '1',
-            'country': u'AL',
+            'country': 'AL',
         }
 
         response = self.client.patch(url, data=new_data)

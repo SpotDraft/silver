@@ -1298,7 +1298,7 @@ class TestInvoiceGenerationCommand(TestCase):
                                   generate_after=120, enabled=True,
                                   trial_period_days=7, amount=Decimal('200.00'),
                                   metered_features=[metered_feature])
-        start_date = dt.date(2015, 02, 01)
+        start_date = dt.date(2015, 0o2, 0o1)
         trial_end = start_date + dt.timedelta(days=plan.trial_period_days)
 
         subscription = SubscriptionFactory.create(
@@ -1419,7 +1419,7 @@ class TestInvoiceGenerationCommand(TestCase):
                                   generate_after=120, enabled=True,
                                   trial_period_days=7, amount=Decimal('200.00'),
                                   metered_features=[metered_feature])
-        start_date = dt.date(2015, 02, 01)
+        start_date = dt.date(2015, 0o2, 0o1)
 
         subscription = SubscriptionFactory.create(plan=plan, start_date=start_date)
         subscription.activate()
@@ -1438,7 +1438,7 @@ class TestInvoiceGenerationCommand(TestCase):
         )
 
         subscription.cancel(when=Subscription.CANCEL_OPTIONS.END_OF_BILLING_CYCLE)
-        subscription.cancel_date = dt.date(2015, 02, 28)
+        subscription.cancel_date = dt.date(2015, 0o2, 28)
         subscription.save()
 
         call_command('generate_docs', billing_date=billing_date, stdout=self.output)
@@ -1488,7 +1488,7 @@ class TestInvoiceGenerationCommand(TestCase):
                                   generate_after=120, enabled=True,
                                   trial_period_days=7, amount=Decimal('200.00'),
                                   metered_features=[metered_feature])
-        start_date = dt.date(2015, 02, 01)
+        start_date = dt.date(2015, 0o2, 0o1)
 
         subscription = SubscriptionFactory.create(plan=plan, start_date=start_date)
         subscription.activate()
@@ -1648,7 +1648,7 @@ class TestInvoiceGenerationCommand(TestCase):
 
         mf_log = MeteredFeatureUnitsLogFactory.create(
             subscription=subscription, metered_feature=metered_feature,
-            start_date=subscription.start_date, end_date=dt.date(2015, 01, 31),
+            start_date=subscription.start_date, end_date=dt.date(2015, 0o1, 31),
             consumed_units=Decimal('5.00')
         )
 
@@ -1677,7 +1677,7 @@ class TestInvoiceGenerationCommand(TestCase):
             assert entry.unit_price == unit_price
             assert entry.prorated
             assert entry.start_date == subscription.start_date
-            assert entry.end_date == dt.date(2015, 01, 31)
+            assert entry.end_date == dt.date(2015, 0o1, 31)
 
         call_command('generate_docs', date=generate_docs_date('2015-03-01'),
                      subscription=subscription.pk, stdout=self.output)
@@ -1739,7 +1739,7 @@ class TestInvoiceGenerationCommand(TestCase):
 
         mf_log = MeteredFeatureUnitsLogFactory.create(
             subscription=subscription, metered_feature=metered_feature,
-            start_date=subscription.start_date, end_date=dt.date(2015, 01, 31),
+            start_date=subscription.start_date, end_date=dt.date(2015, 0o1, 31),
             consumed_units=Decimal('5.00')
         )
 
@@ -1818,7 +1818,7 @@ class TestInvoiceGenerationCommand(TestCase):
 
         mf_log = MeteredFeatureUnitsLogFactory.create(
             subscription=subscription, metered_feature=metered_feature,
-            start_date=subscription.start_date, end_date=dt.date(2015, 01, 31),
+            start_date=subscription.start_date, end_date=dt.date(2015, 0o1, 31),
             consumed_units=Decimal('5.00')
         )
 

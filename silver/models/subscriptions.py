@@ -40,6 +40,7 @@ from .billing_entities import Customer
 from .documents import DocumentEntry
 from silver.utils.dates import ONE_DAY, relativedelta, first_day_of_month
 from silver.validators import validate_reference
+from functools import reduce
 
 
 logger = logging.getLogger(__name__)
@@ -111,7 +112,7 @@ class MeteredFeatureUnitsLog(models.Model):
             super(MeteredFeatureUnitsLog, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return unicode(self.metered_feature.name)
+        return str(self.metered_feature.name)
 
 
 class Subscription(models.Model):
@@ -995,7 +996,7 @@ class Subscription(models.Model):
         return base_context
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.customer, self.plan)
+        return '%s (%s)' % (self.customer, self.plan)
 
 
 class BillingLog(models.Model):
@@ -1032,7 +1033,7 @@ class BillingLog(models.Model):
         ordering = ['-billing_date']
 
     def __unicode__(self):
-        return u'{sub} - {pro} - {inv} - {date}'.format(
+        return '{sub} - {pro} - {inv} - {date}'.format(
             sub=self.subscription, pro=self.proforma,
             inv=self.invoice, date=self.billing_date)
 

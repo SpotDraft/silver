@@ -127,7 +127,7 @@ class Plan(models.Model):
             product_codes[mf.product_code.value] = mf.name
 
     def __unicode__(self):
-        return unicode(self.name)
+        return str(self.name)
 
     @property
     def provider_flow(self):
@@ -162,6 +162,6 @@ class MeteredFeature(models.Model):
         ordering = ('name',)
 
     def __unicode__(self):
-        fmt = u'{name} ({price:.2f}$, {included:.2f} included)'
+        fmt = '{name} ({price:.2f}$, {included:.2f} included)'
         return fmt.format(name=self.name, price=self.price_per_unit,
                           included=self.included_units)

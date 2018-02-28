@@ -111,7 +111,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
         response = self.client.put(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, {
-            'payment_processor_name': [u'This field may not be modified.']
+            'payment_processor_name': ['This field may not be modified.']
         })
 
     def test_put_detail_reenable_payment_method(self):
@@ -134,7 +134,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
         response = self.client.put(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, {
-            'non_field_errors': [u'You cannot update a canceled payment method.']
+            'non_field_errors': ['You cannot update a canceled payment method.']
         })
 
     def test_put_detail_unverify_payment_method(self):
@@ -157,7 +157,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
         response = self.client.put(url, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(response.data, {
-            'verified': [u'You cannot unverify a payment method.']
+            'verified': ['You cannot unverify a payment method.']
         })
 
     def test_put_detail(self):
@@ -181,7 +181,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
 
     def test_get_listing_no_customer(self):
         url = reverse('payment-method-list', kwargs={
-            'customer_pk': sys.maxint
+            'customer_pk': sys.maxsize
         })
 
         response = self.client.get(url, format='json')
@@ -190,7 +190,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
 
     def test_get_detail_no_customer(self):
         url = reverse('payment-method-detail', kwargs={
-            'customer_pk': sys.maxint,
+            'customer_pk': sys.maxsize,
             'payment_method_id': 0
         })
 
@@ -201,7 +201,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
     def test_get_detail_no_payment_method(self):
         url = reverse('payment-method-detail', kwargs={
             'customer_pk': self.customer.pk,
-            'payment_method_id': sys.maxint
+            'payment_method_id': sys.maxsize
         })
 
         response = self.client.get(url, format='json')
@@ -210,7 +210,7 @@ class TestPaymentMethodEndpoints(APIGetAssert):
 
     def test_post_listing_no_customer(self):
         url = reverse('payment-method-list', kwargs={
-            'customer_pk': sys.maxint
+            'customer_pk': sys.maxsize
         })
 
         response = self.client.post(url, data={

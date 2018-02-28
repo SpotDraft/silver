@@ -88,7 +88,7 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
                 transaction_dict = transaction.__dict__.copy()
 
                 errors = {}
-                for attribute, value in attrs.items():
+                for attribute, value in list(attrs.items()):
                     if attribute in self.Meta.updateable_fields:
                         continue
 

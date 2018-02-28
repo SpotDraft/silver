@@ -41,12 +41,12 @@ class PaymentMethod(models.Model):
     class PaymentProcessors:
         @classmethod
         def as_choices(cls):
-            for name in settings.PAYMENT_PROCESSORS.keys():
+            for name in list(settings.PAYMENT_PROCESSORS.keys()):
                 yield (name, name)
 
         @classmethod
         def as_list(cls):
-            return [name for name in settings.PAYMENT_PROCESSORS.keys()]
+            return [name for name in list(settings.PAYMENT_PROCESSORS.keys())]
 
     payment_processor = models.CharField(choices=PaymentProcessors.as_choices(),
                                          blank=False, null=False, max_length=256)
@@ -184,7 +184,7 @@ class PaymentMethod(models.Model):
         return {}
 
     def __unicode__(self):
-        return u'{} - {} - {}'.format(self.customer,
+        return '{} - {} - {}'.format(self.customer,
                                       self.get_payment_processor_display(),
                                       self.pk)
 
