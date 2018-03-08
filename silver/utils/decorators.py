@@ -11,9 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from uuid import UUID
 
+import logging
 import jwt
+
+from uuid import UUID
 from django.http import Http404
 
 from django.conf import settings
@@ -21,9 +23,11 @@ from django.shortcuts import get_object_or_404
 
 from silver.models.transactions import Transaction
 
+logger = logging.getLogger(__name__)
 
 def get_transaction_from_token(view):
     def decorator(request, token):
+        logger.info('Looking for transaction from token %s', token)
         try:
             expired = False
             transaction_uuid = jwt.decode(token,
@@ -38,5 +42,6 @@ def get_transaction_from_token(view):
         except ValueError:
             raise Http404
 
+        logger.info('Looking for transaction from token %s jwt passed', token)
         return view(request, get_object_or_404(Transaction, uuid=uuid), expired)
     return decorator
